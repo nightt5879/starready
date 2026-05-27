@@ -102,6 +102,22 @@ test("formats Markdown reports with priorities and category table", async () => 
   assert.match(report, /\| Category \| Score \| Earned \|/);
 });
 
+test("penalizes package bin paths that do not exist", async () => {
+  const root = await makeFixture({
+    "README.md": "# Broken CLI\n\nBroken CLI helps developers test package metadata.\n",
+    "package.json": JSON.stringify({
+      name: "broken-cli",
+      bin: { broken: "./bin/missing.js" },
+      scripts: { test: "node --test" }
+    })
+  });
+  const result = await auditRepository(root);
+  const commands = result.checks.find((check) => check.id === "engineering.commands");
+
+  assert.equal(commands.status, "partial");
+  assert.match(commands.evidence, /missing bin paths/);
+});
+
 async function makeFixture(files = {}) {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), "starready-"));
 

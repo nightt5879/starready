@@ -1,8 +1,9 @@
 {
   "name": "starready",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Audit any GitHub repository for launch-readiness, trust signals, and star-worthy polish.",
   "type": "module",
+  "author": "nightt5879",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nightt5879/starready.git"
@@ -17,7 +18,7 @@
   "files": [
     "bin/",
     "src/",
-    "docs/scoring.md",
+    "docs/",
     "README.md",
     "CHANGELOG.md",
     "LICENSE"
@@ -25,6 +26,7 @@
   "scripts": {
     "start": "node bin/starready.js .",
     "test": "node --test",
+    "check": "npm test && node bin/starready.js . --summary --fail-below 80",
     "audit:self": "node bin/starready.js . --markdown STARREADY_REPORT.md --fail-below 80"
   },
   "keywords": [

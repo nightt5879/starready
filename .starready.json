@@ -1,0 +1,6 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nightt5879/starready/main/docs/starready.schema.json",
+  "failBelow": 80,
+  "format": "summary",
+  "ignoredDirs": []
+}

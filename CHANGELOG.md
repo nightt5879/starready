@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0
+
+- Added `.starready.json` config support.
+- Added `starready --init` to create a starter config and GitHub Actions workflow.
+- Added `--config`, `--no-config`, and `--version`.
+- Added CLI tests, config documentation, CI documentation, Node API documentation, schema metadata, Dependabot, support docs, and CODEOWNERS.
+- Updated copyright ownership to nightt5879.
+
 ## 0.1.0
 
 - Initial StarReady CLI.

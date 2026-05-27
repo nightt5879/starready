@@ -3,6 +3,7 @@
 [![CI](https://github.com/nightt5879/starready/actions/workflows/ci.yml/badge.svg)](https://github.com/nightt5879/starready/actions/workflows/ci.yml)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Node](https://img.shields.io/badge/node-%3E%3D18.18-brightgreen)
+![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)
 
 StarReady helps open-source maintainers audit whether a GitHub repository is clear, trustworthy, and easy to share before launch.
 
@@ -18,6 +19,12 @@ StarReady turns those adoption signals into a local score and a prioritized fix 
 
 ```bash
 npx starready .
+```
+
+Initialize a repository with config and CI:
+
+```bash
+npx starready --init
 ```
 
 Write a Markdown report and fail CI when the repository is not ready enough:
@@ -55,12 +62,16 @@ starready [path] [options]
 
 | Option | Description |
 | --- | --- |
+| `--init` | Create `.starready.json` and a GitHub Actions workflow. |
+| `--config <file>` | Load a specific StarReady config file. |
+| `--no-config` | Ignore `.starready.json`. |
 | `--markdown [file]` | Print Markdown, or write it to a file when a path is provided. |
 | `--json` | Print machine-readable JSON. |
 | `--summary` | Print a compact text summary. |
 | `--output, -o <file>` | Write the selected format to a file. |
 | `--fail-below <score>` | Exit with code 1 when the score is below the threshold. |
 | `--strict` | Same as `--fail-below 85`. |
+| `--version, -v` | Show the installed StarReady version. |
 
 ## What StarReady Checks
 
@@ -103,6 +114,24 @@ jobs:
       - run: npx starready . --summary --fail-below 80
 ```
 
+Use a config file:
+
+```json
+{
+  "$schema": "https://raw.githubusercontent.com/nightt5879/starready/main/docs/starready.schema.json",
+  "failBelow": 80,
+  "format": "summary",
+  "ignoredDirs": ["fixtures"]
+}
+```
+
+More details:
+
+- [Configuration](docs/configuration.md)
+- [Continuous integration](docs/ci.md)
+- [Node API](docs/api.md)
+- [Scoring model](docs/scoring.md)
+
 ## Roadmap
 
 - GitHub API mode for repository topics, releases, discussions, and star velocity.
@@ -121,11 +150,11 @@ Run the project locally:
 ```bash
 npm install
 npm test
-node bin/starready.js . --summary
+npm run check
 ```
 
 Good first contributions include new checks, better evidence messages, and report formats for CI dashboards.
 
 ## License
 
-MIT
+MIT (c) 2026 nightt5879

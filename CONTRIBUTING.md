@@ -7,13 +7,15 @@ Thanks for helping improve StarReady.
 ```bash
 npm install
 npm test
-node bin/starready.js . --summary
+npm run check
 ```
 
 ## Pull Requests
 
 - Keep checks deterministic and local-first.
+- Keep the zero-runtime-dependency install path unless a dependency removes real complexity.
 - Include tests for new scoring behavior.
+- Include CLI tests when changing flags, config loading, output formats, or exit codes.
 - Prefer clear evidence and advice over clever scoring.
 - Avoid network calls in the default audit path.
 

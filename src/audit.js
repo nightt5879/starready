@@ -6,8 +6,7 @@ import {
   readJsonFile,
   readTextFile
 } from "./files.js";
-
-const VERSION = "0.1.0";
+import { VERSION } from "./version.js";
 
 const CATEGORY_ORDER = [
   "First impression",
@@ -225,8 +224,17 @@ const CHECKS = [
     run: (context) => {
       const scripts = Object.keys(context.packageJson?.scripts ?? {});
       const hasCliBin = Boolean(context.packageJson?.bin);
-      const score = scripts.includes("test") && (scripts.includes("start") || hasCliBin) ? 1 : scripts.length > 0 ? 0.5 : 0;
-      return grade(score, `Scripts: ${scripts.join(", ") || "none"}; bin: ${hasCliBin ? "yes" : "no"}`, "Expose start, test, build, or CLI commands so contributors know how to run the project.")
+      const binPaths = getPackageBinPaths(context.packageJson?.bin);
+      const missingBins = binPaths.filter((binPath) => !hasFile(context.files, binPath));
+      const hasValidCliBin = hasCliBin && missingBins.length === 0;
+      const hasRunnableEntry = scripts.includes("start") || hasValidCliBin;
+      const score = scripts.includes("test") && hasRunnableEntry ? 1 : scripts.length > 0 ? 0.5 : 0;
+      const binEvidence = hasCliBin
+        ? missingBins.length === 0
+          ? "bin paths exist"
+          : `missing bin paths: ${missingBins.join(", ")}`
+        : "no bin";
+      return grade(score, `Scripts: ${scripts.join(", ") || "none"}; ${binEvidence}`, "Expose start, test, build, or CLI commands and ensure package bin paths point to real files.")
     }
   },
   {
@@ -366,7 +374,9 @@ export async function auditRepository(targetPath = ".", options = {}) {
     };
   });
 
-  const totalScore = Math.round(sum(checks.map((check) => check.earned)));
+  const totalWeight = sum(checks.map((check) => check.weight));
+  const earnedWeight = sum(checks.map((check) => check.earned));
+  const totalScore = totalWeight > 0 ? Math.round((earnedWeight / totalWeight) * 100) : 0;
   const actions = checks
     .filter((check) => check.score < 1)
     .sort((left, right) => right.missed - left.missed)
@@ -375,7 +385,7 @@ export async function auditRepository(targetPath = ".", options = {}) {
       id: check.id,
       title: check.title,
       category: check.category,
-      impact: round(check.missed, 2),
+      impact: totalWeight > 0 ? round((check.missed / totalWeight) * 100, 2) : 0,
       advice: check.advice
     }));
 
@@ -469,6 +479,23 @@ function getFirstParagraph(markdown) {
 
 function truncate(text, maxLength) {
   return text.length > maxLength ? text.slice(0, maxLength - 1) + "." : text;
+}
+
+function getPackageBinPaths(bin) {
+  if (typeof bin === "string") {
+    return [bin];
+  }
+
+  if (!bin || typeof bin !== "object" || Array.isArray(bin)) {
+    return [];
+  }
+
+  return Object.values(bin).filter((value) => typeof value === "string");
+}
+
+function hasFile(files, filePath) {
+  const normalized = filePath.replace(/\\/g, "/").replace(/^\.?\//, "").toLowerCase();
+  return files.some((file) => file.lowerPath === normalized);
 }
 
 function sum(values) {
