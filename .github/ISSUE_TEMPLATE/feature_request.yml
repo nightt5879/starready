@@ -1,0 +1,20 @@
+name: Feature request
+description: Suggest a new check, report format, or workflow.
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What adoption or launch-readiness gap should StarReady catch?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: Describe the check or workflow you want.
+    validations:
+      required: true

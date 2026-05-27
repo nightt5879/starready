@@ -1,0 +1,26 @@
+name: Bug report
+description: Report a reproducible problem in StarReady.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: textarea
+    id: current
+    attributes:
+      label: What happened?
+      description: Describe the actual behavior and include the command you ran.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Node.js version
+      placeholder: "node --version"
+    validations:
+      required: true

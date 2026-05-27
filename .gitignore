@@ -1,0 +1,8 @@
+node_modules/
+coverage/
+dist/
+*.log
+.env
+.DS_Store
+STARREADY_REPORT.md
+starready.json

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="500" viewBox="0 0 960 500" role="img" aria-labelledby="title desc">
+  <title id="title">StarReady terminal demo</title>
+  <desc id="desc">A terminal-style preview showing a StarReady repository audit score and prioritized fixes.</desc>
+  <rect width="960" height="500" rx="18" fill="#111827"/>
+  <rect x="32" y="32" width="896" height="436" rx="12" fill="#0b1020" stroke="#263145"/>
+  <circle cx="62" cy="62" r="8" fill="#ef4444"/>
+  <circle cx="88" cy="62" r="8" fill="#f59e0b"/>
+  <circle cx="114" cy="62" r="8" fill="#22c55e"/>
+  <text x="52" y="118" fill="#e5e7eb" font-family="Consolas, monospace" font-size="24">$ starready . --summary</text>
+  <text x="52" y="168" fill="#86efac" font-family="Consolas, monospace" font-size="34" font-weight="700">StarReady 92/100 (A)</text>
+  <text x="52" y="210" fill="#d1d5db" font-family="Consolas, monospace" font-size="21">Launch-ready: strong first-impression, trust, and contributor signals.</text>
+  <text x="52" y="272" fill="#93c5fd" font-family="Consolas, monospace" font-size="22">Category scores</text>
+  <text x="76" y="314" fill="#e5e7eb" font-family="Consolas, monospace" font-size="20">First impression  100/100</text>
+  <text x="76" y="346" fill="#e5e7eb" font-family="Consolas, monospace" font-size="20">Product clarity    90/100</text>
+  <text x="76" y="378" fill="#e5e7eb" font-family="Consolas, monospace" font-size="20">Trust             100/100</text>
+  <text x="76" y="410" fill="#e5e7eb" font-family="Consolas, monospace" font-size="20">Engineering        94/100</text>
+</svg>
