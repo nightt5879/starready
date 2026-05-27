@@ -2,11 +2,11 @@
 
 The `starready` package name is currently available, but publishing requires an authenticated npm account on the local machine or an npm automation token.
 
-## One-Time Login
+## Option A: Local Login
 
 ```bash
-npm adduser
-npm whoami
+npm adduser --registry https://registry.npmjs.org/
+npm whoami --registry https://registry.npmjs.org/
 ```
 
 ## Publish
@@ -24,6 +24,23 @@ npx starready --version
 npx starready . --summary
 ```
 
+## Option B: GitHub Actions
+
+Create an npm automation token, then add it to the GitHub repository as `NPM_TOKEN`.
+
+Run the workflow manually:
+
+```text
+Actions -> Publish npm -> Run workflow -> dry_run=false
+```
+
+The workflow runs:
+
+- `npm ci`
+- `npm run check`
+- `npm publish --dry-run`
+- `npm publish --provenance`
+
 ## Current State
 
-`npm run release:check` runs tests, self-audit, and `npm publish --dry-run`. Actual publish requires an authenticated npm session.
+`npm run release:check` runs tests, self-audit, and `npm publish --dry-run`. Actual publish requires either an authenticated npm session or the `NPM_TOKEN` GitHub secret.
