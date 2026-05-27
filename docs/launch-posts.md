@@ -49,12 +49,11 @@ npm: https://www.npmjs.com/package/starready
 ```text
 I built StarReady: a zero-dependency CLI that audits whether your GitHub repo is ready to launch.
 
-It checks README clarity, demo, quickstart, license, CI, tests, community files, topics, releases, discussions, and activity.
+It checks README clarity, quickstart, license, CI, tests, community files, topics, releases, and activity.
 
 npx starready .
 
 https://github.com/nightt5879/starready
-npm: https://www.npmjs.com/package/starready
 ```
 
 ## Chinese Communities
