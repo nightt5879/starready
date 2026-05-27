@@ -21,6 +21,8 @@ This file tracks StarReady launch promotion after the npm release.
 | Reddit | Draft filled in Chrome | Relevant programming/open-source communities | Title and body are prepared; community selection still needs manual confirmation. |
 | X / Twitter | Draft filled in Chrome | Personal/account audience | The single-post draft is prepared; publish only after final confirmation. A PNG demo image is available but was not uploaded because Chrome extension file access is disabled. |
 | Chinese communities | Waiting for login | V2EX, Juejin, Zhihu, or similar | V2EX redirected to sign-in. Use the Chinese draft from `docs/launch-posts.md` after login. |
+| Product Hunt | Prepared | Product Hunt launch flow | Second-wave launch package is in `docs/promotion-playbook.md`. |
+| DEV Community | Prepared | DEV article editor | Second-wave article package is in `docs/promotion-playbook.md`. |
 
 ## Posting Rules
 
@@ -38,6 +40,8 @@ This file tracks StarReady launch promotion after the npm release.
 - [ ] Choose a Reddit community and publish one Reddit post.
 - [ ] Confirm and publish one X / Twitter post.
 - [ ] Publish one Chinese community post.
+- [ ] Prepare or schedule a Product Hunt launch.
+- [ ] Publish a DEV Community write-up.
 - [ ] Add posted links below.
 
 ## Posting Queue

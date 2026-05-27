@@ -7,7 +7,8 @@ This playbook turns the launch drafts into channel-specific posting packages.
 1. Publish the prepared X / Twitter post.
 2. Publish the Reddit post to a community that accepts project launches.
 3. Publish one Chinese community post.
-4. Retry Hacker News after account creation or login works.
+4. Prepare Product Hunt and DEV Community as second-wave channels.
+5. Retry Hacker News after account creation or login works.
 
 ## Shared Rules
 
@@ -101,6 +102,104 @@ npm: https://www.npmjs.com/package/starready
 ```
 
 If V2EX requires login, let the user log in manually and continue from the create-post page.
+
+## Product Hunt
+
+Status: second-wave channel, not yet opened in Chrome.
+
+Product URL:
+
+```text
+https://github.com/nightt5879/starready
+```
+
+Name:
+
+```text
+StarReady
+```
+
+Tagline:
+
+```text
+Audit whether a GitHub repo is ready to launch
+```
+
+Description:
+
+```text
+StarReady is a zero-dependency Node.js CLI that audits a GitHub repository's public launch surface: README clarity, quickstart, license, CI, tests, community files, GitHub topics, releases, discussions, and activity.
+
+It is not a star-growth hack or a code-quality scanner. It is a practical launch-readiness checklist for open-source projects.
+```
+
+Maker comment:
+
+```text
+I built StarReady after noticing that many useful open-source repos lose visitors before they ever try the project. The code may be good, but the public surface is missing a clear promise, quickstart, license, demo, release, or contribution path.
+
+StarReady turns those launch-readiness signals into a score and prioritized fixes, so maintainers can see what blocks a stranger from understanding, trusting, installing, and sharing the project.
+
+Try it:
+
+npx starready .
+npx starready github owner/repo --summary
+
+I'd especially like feedback from maintainers on which repo-readiness checks should be added next.
+```
+
+Assets:
+
+- `docs/starready-demo.png`
+- GitHub repo URL
+- npm package URL
+
+## DEV Community
+
+Status: second-wave channel, not yet opened in Chrome.
+
+Title:
+
+```text
+I built StarReady, a CLI for checking if a GitHub repo is ready to launch
+```
+
+Tags:
+
+```text
+opensource, github, cli, tooling
+```
+
+Post:
+
+````text
+I built StarReady, a zero-dependency Node.js CLI that audits whether a GitHub repository is ready to be shared publicly.
+
+The problem it tries to solve: a repository can have useful code but still lose visitors because the public surface is incomplete. A stranger lands on the repo and cannot quickly answer:
+
+- What does this do?
+- Can I try it in a minute?
+- Is there a license?
+- Are tests and CI visible?
+- Is there a release?
+- Are contribution and support paths clear?
+
+StarReady checks those launch-readiness signals and returns a score plus prioritized fixes.
+
+Install-free usage:
+
+```bash
+npx starready .
+npx starready github owner/repo --summary
+```
+
+It is not a code-quality scanner and does not promise stars. It is closer to a pre-launch checklist for open-source maintainers.
+
+Links:
+
+- GitHub: https://github.com/nightt5879/starready
+- npm: https://www.npmjs.com/package/starready
+````
 
 ## Hacker News
 
