@@ -10,7 +10,7 @@ test("prints the version", async () => {
   const exitCode = await runCli(["--version"], streams);
 
   assert.equal(exitCode, 0);
-  assert.equal(output.stdout.trim(), "starready 0.2.0");
+  assert.equal(output.stdout.trim(), "starready 0.3.0");
   assert.equal(output.stderr, "");
 });
 
@@ -28,6 +28,18 @@ test("writes JSON output to a file", async () => {
   assert.equal(exitCode, 0);
   assert.equal(report.tool, "StarReady");
   assert.match(output.stdout, /Wrote /);
+});
+
+test("prints a local badge URL", async () => {
+  const root = await makeFixture({
+    "README.md": "# Tiny\n\nTiny helps developers audit launch readiness.\n"
+  });
+  const { streams, output } = createStreams();
+
+  const exitCode = await runCli(["badge", root, "--url", "--no-config"], streams);
+
+  assert.equal(exitCode, 0);
+  assert.match(output.stdout, /^https:\/\/img\.shields\.io\/badge\/starready-/);
 });
 
 test("loads .starready.json and honors ignored directories", async () => {

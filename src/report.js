@@ -22,13 +22,21 @@ export function formatSummary(result) {
   return lines.join("\n") + "\n";
 }
 
+export function formatBadge(result, options = {}) {
+  const url = badgeUrl(result.score);
+  if (options.markdown === false) {
+    return `${url}\n`;
+  }
+  return `![StarReady score](${url})\n`;
+}
+
 export function formatMarkdownReport(result) {
   const lines = [
     "# StarReady Report",
     "",
     `**Score:** ${result.score}/100 (${result.grade})`,
     "",
-    `![StarReady score](https://img.shields.io/badge/starready-${result.score}%2F100-${badgeColor(result.score)})`,
+    `![StarReady score](${badgeUrl(result.score)})`,
     "",
     result.summary,
     "",
@@ -95,6 +103,10 @@ function badgeColor(score) {
   if (score >= 60) return "yellow";
   if (score >= 45) return "orange";
   return "red";
+}
+
+function badgeUrl(score) {
+  return `https://img.shields.io/badge/starready-${score}%2F100-${badgeColor(score)}`;
 }
 
 function escapePipes(value) {

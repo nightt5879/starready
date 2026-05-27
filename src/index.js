@@ -1,4 +1,5 @@
-export { auditRepository } from "./audit.js";
+export { auditContext, auditRepository } from "./audit.js";
 export { loadConfig } from "./config.js";
-export { formatMarkdownReport, formatSummary } from "./report.js";
+export { auditGitHubRepository, parseGitHubRepository } from "./github.js";
+export { formatBadge, formatMarkdownReport, formatSummary } from "./report.js";
 export { VERSION } from "./version.js";

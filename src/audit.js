@@ -13,7 +13,8 @@ const CATEGORY_ORDER = [
   "Product clarity",
   "Trust",
   "Engineering",
-  "Community"
+  "Community",
+  "GitHub surface"
 ];
 
 const CHECKS = [
@@ -321,6 +322,65 @@ const CHECKS = [
       const readmeHasShareCopy = /\b(hacker news|product hunt|reddit|launch|share|announcement)\b/i.test(context.readme);
       return grade(Boolean(launchFile || readmeHasShareCopy), launchFile ? `Found ${launchFile.path}` : readmeHasShareCopy ? "README includes launch language" : "No launch assets found", "Add launch copy, demo commands, and short social posts so others can explain the project.")
     }
+  },
+  {
+    id: "github.description",
+    category: "GitHub surface",
+    title: "Repository description and homepage",
+    weight: 3,
+    githubOnly: true,
+    run: (context) => {
+      const description = context.github?.description ?? "";
+      const homepage = context.github?.homepageUrl ?? "";
+      const hasDescription = description.length >= 30 && description.length <= 160;
+      const score = hasDescription && homepage ? 1 : hasDescription ? 0.5 : 0;
+      return grade(score, `Description: ${description ? "yes" : "no"}; homepage: ${homepage ? "yes" : "no"}`, "Add a concise GitHub description and homepage/readme link so the repository card explains itself.")
+    }
+  },
+  {
+    id: "github.topics",
+    category: "GitHub surface",
+    title: "GitHub topics",
+    weight: 4,
+    githubOnly: true,
+    run: (context) => {
+      const topics = context.github?.topics ?? [];
+      const score = topics.length >= 6 ? 1 : topics.length >= 3 ? 0.5 : 0;
+      return grade(score, `${topics.length} topic(s): ${topics.join(", ") || "none"}`, "Add 6-8 specific repository topics for discovery.")
+    }
+  },
+  {
+    id: "github.release",
+    category: "GitHub surface",
+    title: "Published release",
+    weight: 4,
+    githubOnly: true,
+    run: (context) => {
+      const release = context.github?.latestRelease;
+      return grade(Boolean(release), release ? `Latest release: ${release.tagName}` : "No GitHub release found", "Create a GitHub release so users can identify stable versions.")
+    }
+  },
+  {
+    id: "github.discussions",
+    category: "GitHub surface",
+    title: "Discussion channel",
+    weight: 2,
+    githubOnly: true,
+    run: (context) =>
+      grade(Boolean(context.github?.hasDiscussions), context.github?.hasDiscussions ? "Discussions enabled" : "Discussions disabled", "Enable GitHub Discussions for questions, ideas, and launch feedback.")
+  },
+  {
+    id: "github.activity",
+    category: "GitHub surface",
+    title: "Recent activity",
+    weight: 3,
+    githubOnly: true,
+    run: (context) => {
+      const pushedAt = context.github?.pushedAt;
+      const ageDays = pushedAt ? Math.floor((Date.now() - new Date(pushedAt).getTime()) / 86400000) : Infinity;
+      const score = ageDays <= 30 ? 1 : ageDays <= 180 ? 0.5 : 0;
+      return grade(score, pushedAt ? `Last push: ${pushedAt}` : "No push timestamp found", "Keep the default branch active so visitors see a maintained project.")
+    }
   }
 ];
 
@@ -331,15 +391,18 @@ export async function auditRepository(targetPath = ".", options = {}) {
   const readme = readmeFile ? await readTextFile(root, readmeFile.path) : "";
   const packageJson = await readJsonFile(root, "package.json");
 
-  const context = {
+  return auditContext({
     root,
     files,
     readmeFile,
     readme,
     packageJson
-  };
+  });
+}
 
-  const checks = CHECKS.map((check) => {
+export function auditContext(context) {
+  const activeChecks = CHECKS.filter((check) => !check.githubOnly || context.github);
+  const checks = activeChecks.map((check) => {
     const result = check.run(context);
     const score = clampScore(result.score);
     const earned = round(check.weight * score, 2);
@@ -372,7 +435,7 @@ export async function auditRepository(targetPath = ".", options = {}) {
       score,
       checks: categoryChecks
     };
-  });
+  }).filter((category) => category.checks.length > 0);
 
   const totalWeight = sum(checks.map((check) => check.weight));
   const earnedWeight = sum(checks.map((check) => check.earned));
@@ -393,8 +456,10 @@ export async function auditRepository(targetPath = ".", options = {}) {
     tool: "StarReady",
     version: VERSION,
     generatedAt: new Date().toISOString(),
-    root,
-    fileCount: files.length,
+    root: context.root,
+    source: context.source ?? "local",
+    url: context.url ?? null,
+    fileCount: context.files.length,
     score: totalScore,
     grade: gradeFromScore(totalScore),
     summary: summaryFromScore(totalScore),

@@ -4,6 +4,7 @@
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Node](https://img.shields.io/badge/node-%3E%3D18.18-brightgreen)
 ![Dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)
+![StarReady score](https://img.shields.io/badge/starready-100%2F100-brightgreen)
 
 StarReady helps open-source maintainers audit whether a GitHub repository is clear, trustworthy, and easy to share before launch.
 
@@ -39,6 +40,18 @@ Get a compact terminal summary:
 npx starready ../your-repo --summary
 ```
 
+Audit a public GitHub repository without cloning:
+
+```bash
+npx starready github nightt5879/starready --summary
+```
+
+Generate a README badge:
+
+```bash
+npx starready badge .
+```
+
 ## Installation
 
 Use it without installing:
@@ -58,6 +71,8 @@ starready .
 
 ```bash
 starready [path] [options]
+starready github <owner/repo> [options]
+starready badge [path] [--url]
 ```
 
 | Option | Description |
@@ -65,6 +80,7 @@ starready [path] [options]
 | `--init` | Create `.starready.json` and a GitHub Actions workflow. |
 | `--config <file>` | Load a specific StarReady config file. |
 | `--no-config` | Ignore `.starready.json`. |
+| `--url` | Print only the badge URL when using `starready badge`. |
 | `--markdown [file]` | Print Markdown, or write it to a file when a path is provided. |
 | `--json` | Print machine-readable JSON. |
 | `--summary` | Print a compact text summary. |
@@ -91,6 +107,18 @@ Generate JSON for another tool:
 
 ```bash
 starready . --json --output starready.json
+```
+
+Audit a remote repository through the GitHub API:
+
+```bash
+GITHUB_TOKEN=github_pat_... starready github owner/repo --summary
+```
+
+Print a badge URL:
+
+```bash
+starready badge . --url
 ```
 
 Use StarReady in GitHub Actions:
@@ -127,10 +155,16 @@ Use a config file:
 
 More details:
 
+- [Recorded demo output](docs/demo-output.txt)
 - [Configuration](docs/configuration.md)
+- [GitHub mode](docs/github-mode.md)
+- [Badges](docs/badges.md)
 - [Continuous integration](docs/ci.md)
 - [Node API](docs/api.md)
 - [Scoring model](docs/scoring.md)
+- [Real-world calibration](docs/real-world-calibration.md)
+- [Launch posts](docs/launch-posts.md)
+- [npm publishing](docs/npm-publish.md)
 
 ## Roadmap
 

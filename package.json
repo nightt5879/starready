@@ -1,6 +1,6 @@
 {
   "name": "starready",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Audit any GitHub repository for launch-readiness, trust signals, and star-worthy polish.",
   "type": "module",
   "author": "nightt5879",
@@ -12,8 +12,12 @@
     "url": "https://github.com/nightt5879/starready/issues"
   },
   "homepage": "https://github.com/nightt5879/starready#readme",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "bin": {
-    "starready": "./bin/starready.js"
+    "starready": "bin/starready.js"
   },
   "files": [
     "bin/",
@@ -27,6 +31,8 @@
     "start": "node bin/starready.js .",
     "test": "node --test",
     "check": "npm test && node bin/starready.js . --summary --fail-below 80",
+    "release:check": "npm run check && npm publish --dry-run",
+    "prepublishOnly": "npm run check",
     "audit:self": "node bin/starready.js . --markdown STARREADY_REPORT.md --fail-below 80"
   },
   "keywords": [

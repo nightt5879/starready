@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.0
+
+- Added `starready github <owner/repo>` for remote GitHub repository audits.
+- Added `starready badge` for Shields badge Markdown and URL output.
+- Added real-world sample reports and calibration notes.
+- Added launch post drafts and npm publishing documentation.
+- Updated the README demo, badge, and command reference.
+
 ## 0.2.0
 
 - Added `.starready.json` config support.

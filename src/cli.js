@@ -2,8 +2,9 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { auditRepository } from "./audit.js";
 import { FORMATS, loadConfig, mergeConfig, validateScore } from "./config.js";
+import { auditGitHubRepository } from "./github.js";
 import { formatInitResult, initProject } from "./init.js";
-import { formatMarkdownReport, formatSummary } from "./report.js";
+import { formatBadge, formatMarkdownReport, formatSummary } from "./report.js";
 import { VERSION } from "./version.js";
 
 export async function runCli(argv = process.argv.slice(2), streams = process) {
@@ -32,20 +33,33 @@ export async function runCli(argv = process.argv.slice(2), streams = process) {
     return 0;
   }
 
-  try {
-    const configResult = await loadConfig(options.target, options.configPath, {
-      disabled: options.noConfig
-    });
-    options = mergeConfig(configResult.config, options);
-  } catch (error) {
-    streams.stderr.write(`${error.message}\n`);
-    return 2;
+  if (options.command !== "github") {
+    try {
+      const configResult = await loadConfig(options.target, options.configPath, {
+        disabled: options.noConfig
+      });
+      options = mergeConfig(configResult.config, options);
+    } catch (error) {
+      streams.stderr.write(`${error.message}\n`);
+      return 2;
+    }
   }
 
-  const result = await auditRepository(options.target, {
-    ignoredDirs: options.ignoredDirs
-  });
-  const output = renderOutput(result, options.format);
+  let result;
+  try {
+    result = options.command === "github"
+      ? await auditGitHubRepository(options.target)
+      : await auditRepository(options.target, {
+          ignoredDirs: options.ignoredDirs
+        });
+  } catch (error) {
+    streams.stderr.write(`${error.message}\n`);
+    return 1;
+  }
+
+  const output = options.command === "badge"
+    ? formatBadge(result, { markdown: options.badgeMarkdown })
+    : renderOutput(result, options.format);
 
   if (options.output) {
     const outputPath = path.resolve(options.output);
@@ -68,6 +82,7 @@ export async function runCli(argv = process.argv.slice(2), streams = process) {
 function parseArgs(argv) {
   const options = {
     target: ".",
+    command: "audit",
     format: "markdown",
     output: "",
     failBelow: null,
@@ -76,12 +91,18 @@ function parseArgs(argv) {
     noConfig: false,
     init: false,
     version: false,
+    badgeMarkdown: true,
     help: false,
     provided: new Set()
   };
 
   for (let index = 0; index < argv.length; index += 1) {
     const arg = argv[index];
+
+    if (index === 0 && (arg === "github" || arg === "badge")) {
+      options.command = arg;
+      continue;
+    }
 
     if (arg === "--help" || arg === "-h") {
       options.help = true;
@@ -106,6 +127,11 @@ function parseArgs(argv) {
 
     if (arg === "--no-config") {
       options.noConfig = true;
+      continue;
+    }
+
+    if (arg === "--url") {
+      options.badgeMarkdown = false;
       continue;
     }
 
@@ -163,6 +189,10 @@ function parseArgs(argv) {
     options.target = arg;
   }
 
+  if (options.command === "github" && options.target === ".") {
+    throw new Error("starready github requires owner/repo or https://github.com/owner/repo");
+  }
+
   return options;
 }
 
@@ -195,11 +225,14 @@ function helpText() {
 
 Usage:
   starready [path] [options]
+  starready github <owner/repo> [options]
+  starready badge [path] [--url]
 
 Options:
   --init                 Create .starready.json and a GitHub Actions workflow
   --config <file>        Load a specific StarReady config file
   --no-config            Ignore .starready.json
+  --url                  Print only the badge URL when using starready badge
   --markdown [file]       Print Markdown, or write it to file when a path is provided
   --json                  Print JSON
   --summary               Print a compact text summary
@@ -212,6 +245,8 @@ Options:
 Examples:
   starready --init
   starready .
+  starready github nightt5879/starready --summary
+  starready badge . --url
   starready . --config .starready.json
   starready ../my-repo --summary
   starready . --markdown STARREADY_REPORT.md --fail-below 80

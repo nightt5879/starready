@@ -6,12 +6,12 @@
   <circle cx="62" cy="62" r="8" fill="#ef4444"/>
   <circle cx="88" cy="62" r="8" fill="#f59e0b"/>
   <circle cx="114" cy="62" r="8" fill="#22c55e"/>
-  <text x="52" y="118" fill="#e5e7eb" font-family="Consolas, monospace" font-size="24">$ starready . --summary</text>
-  <text x="52" y="168" fill="#86efac" font-family="Consolas, monospace" font-size="34" font-weight="700">StarReady 92/100 (A)</text>
+  <text x="52" y="118" fill="#e5e7eb" font-family="Consolas, monospace" font-size="24">$ starready github nightt5879/starready --summary</text>
+  <text x="52" y="168" fill="#86efac" font-family="Consolas, monospace" font-size="34" font-weight="700">StarReady 100/100 (A+)</text>
   <text x="52" y="210" fill="#d1d5db" font-family="Consolas, monospace" font-size="21">Launch-ready: strong first-impression, trust, and contributor signals.</text>
   <text x="52" y="272" fill="#93c5fd" font-family="Consolas, monospace" font-size="22">Category scores</text>
   <text x="76" y="314" fill="#e5e7eb" font-family="Consolas, monospace" font-size="20">First impression  100/100</text>
-  <text x="76" y="346" fill="#e5e7eb" font-family="Consolas, monospace" font-size="20">Product clarity    90/100</text>
+  <text x="76" y="346" fill="#e5e7eb" font-family="Consolas, monospace" font-size="20">Product clarity   100/100</text>
   <text x="76" y="378" fill="#e5e7eb" font-family="Consolas, monospace" font-size="20">Trust             100/100</text>
-  <text x="76" y="410" fill="#e5e7eb" font-family="Consolas, monospace" font-size="20">Engineering        94/100</text>
+  <text x="76" y="410" fill="#e5e7eb" font-family="Consolas, monospace" font-size="20">GitHub surface    100/100</text>
 </svg>

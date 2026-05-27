@@ -32,6 +32,24 @@ const result = await auditRepository(".");
 console.log(formatSummary(result));
 ```
 
+## formatBadge
+
+```js
+import { auditRepository, formatBadge } from "starready";
+
+const result = await auditRepository(".");
+console.log(formatBadge(result));
+```
+
+## auditGitHubRepository
+
+```js
+import { auditGitHubRepository } from "starready";
+
+const result = await auditGitHubRepository("nightt5879/starready");
+console.log(result.score);
+```
+
 ## loadConfig
 
 ```js
