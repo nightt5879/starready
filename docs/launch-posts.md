@@ -23,6 +23,7 @@ npx starready .
 npx starready github owner/repo --summary
 
 Repo: https://github.com/nightt5879/starready
+npm: https://www.npmjs.com/package/starready
 ```
 
 ## Reddit
@@ -40,6 +41,7 @@ npx starready github owner/repo --summary
 It is not a code quality scanner and does not promise stars. It is more like a launch-readiness checklist with CI support.
 
 GitHub: https://github.com/nightt5879/starready
+npm: https://www.npmjs.com/package/starready
 ```
 
 ## X / Twitter
@@ -52,6 +54,7 @@ It checks README clarity, demo, quickstart, license, CI, tests, community files,
 npx starready .
 
 https://github.com/nightt5879/starready
+npm: https://www.npmjs.com/package/starready
 ```
 
 ## Chinese Communities
@@ -67,6 +70,7 @@ npx starready .
 npx starready github owner/repo --summary
 
 GitHub: https://github.com/nightt5879/starready
+npm: https://www.npmjs.com/package/starready
 ```
 
 ## Demo Checklist
